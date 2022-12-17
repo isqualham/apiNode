@@ -1,3 +1,4 @@
+import { inject, injectable } from "tsyringe";
 import { InterfaceCategoriesRepository } from "../../repositories/InterfaceCategoriesRepository";
 
 interface CreateCategoryUseCaseData {
@@ -5,8 +6,12 @@ interface CreateCategoryUseCaseData {
     description: string;
 }
 
+@injectable()
 class CreateCategoryUseCase{
-    constructor(private categoriesRepository: InterfaceCategoriesRepository){}
+    constructor(
+        @inject("CategoriesRepository")
+        private categoriesRepository: InterfaceCategoriesRepository
+    ){}
 
     async execute({name, description}:CreateCategoryUseCaseData): Promise<void>{
 
