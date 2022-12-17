@@ -1,1 +1,1 @@
-minha primeira api com node com express, multer e trabalhando com Swagger
+minha primeira api com node com express, multer, trabalhando com Swagger e typeOrm
