@@ -1,12 +1,35 @@
-version: "3"
+version: '3.9'
 
-services: 
+services:
+  dataBase: 
+    image: postgres
+    container_name: dataBase
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=12345678
+      - POSTGRES_DB=test
+    volumes:
+      - pgdata:/data/postgres
+
   app:
     build: .
-    container_name: apiNode
+    container_name: rentx
+    restart: always
     ports:
       - 3333:3333
+      - 9229:9229 # pode inserir essa porta tbm pra poder usar o debug
     volumes:
-      - ./:/usr/app
+      - .:/usr/app
+    links: 
+      - dataBase
+    depends_on:
+      - dataBase
+    
+volumes: 
+  pgdata:
+    driver: local
 
 
