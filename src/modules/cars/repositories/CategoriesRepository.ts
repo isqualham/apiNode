@@ -1,47 +1,35 @@
 import { Category } from "../model/Category"
 import { InterfaceCategoriesRepository } from "./InterfaceCategoriesRepository";
 
+import { getRepository, Repository } from "typeorm";
+
 interface CategoryData {
     name: string;
     description: string;
 }
 
-class CategoriesRepository implements InterfaceCategoriesRepository{
-    private categories: Category[];
+class CategoriesRepository  implements InterfaceCategoriesRepository{
+    private repository: Repository<Category>;
 
-    //padrão de projeto Singleton Instance e getInstance e construct private
+    constructor(){
+        this.repository = getRepository(Category);
+    }    
 
-    private static INSTANCE: CategoriesRepository;
-
-    private constructor(){
-        this.categories = [];
-    }
-
-    public static getInstance(): CategoriesRepository{
-        if(!CategoriesRepository.INSTANCE)
-            CategoriesRepository.INSTANCE = new CategoriesRepository();
-
-        return CategoriesRepository.INSTANCE;
-    }
-
-    create({name, description}: CategoryData):void{
-        const category = new Category();
-    
-        Object.assign(category, {
+    async create({name, description}: CategoryData):Promise<void>{
+        const category = this.repository.create({                
             name,
             description,
-            created_at: new Date()
-        });    
+        });
 
-        this.categories.push(category);
+        await this.repository.save(category);
     }
 
-    index(): Category[]{
-        return this.categories;
+    async index(): Promise<Category[]>{
+        return await this.repository.find();
     }
 
-    findByName(name: string): Category{
-        const category = this.categories.find(category => category.name === name);    
+    async findByName(name: string): Promise<Category>{
+        const category = await this.repository.findOne({name});    
         return category;    
     }
 }

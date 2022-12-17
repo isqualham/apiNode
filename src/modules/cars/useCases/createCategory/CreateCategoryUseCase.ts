@@ -8,9 +8,9 @@ interface CreateCategoryUseCaseData {
 class CreateCategoryUseCase{
     constructor(private categoriesRepository: InterfaceCategoriesRepository){}
 
-    execute({name, description}:CreateCategoryUseCaseData): void{
+    async execute({name, description}:CreateCategoryUseCaseData): Promise<void>{
 
-        const CategoryAlreadExists = this.categoriesRepository.findByName(name);
+        const CategoryAlreadExists = await this.categoriesRepository.findByName(name);
 
         if(CategoryAlreadExists) 
             throw new Error("Category already exists");

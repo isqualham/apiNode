@@ -5,6 +5,8 @@
     "username": "docker",
     "password": "12345678",
     "database": "test", 
+    "migrations": ["./src/dataBase/migrations/*.ts"],
+    "entities": ["./src/modules/**/model/*.ts"],
     "cli": {
       "migrationsDir": "./src/dataBase/migrations"
     }

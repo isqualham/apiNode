@@ -6,9 +6,9 @@ interface CategoryData {
 }
 
 interface InterfaceCategoriesRepository{
-    create({name, description}: CategoryData):void;
-    index(): Category[];
-    findByName(name: string): Category;
+    create({name, description}: CategoryData):Promise<void>;
+    index(): Promise<Category[]>;
+    findByName(name: string): Promise<Category>;
 }
 
 export {InterfaceCategoriesRepository}
