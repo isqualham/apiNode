@@ -1,4 +1,5 @@
 import { inject, injectable } from "tsyringe";
+import { Errors } from "../../../../errors/Errors";
 import { InterfaceCategoriesRepository } from "../../repositories/InterfaceCategoriesRepository";
 
 interface CreateCategoryUseCaseData {
@@ -18,7 +19,7 @@ class CreateCategoryUseCase{
         const CategoryAlreadExists = await this.categoriesRepository.findByName(name);
 
         if(CategoryAlreadExists) 
-            throw new Error("Category already exists");
+            throw new Errors("Category already exists");
 
         this.categoriesRepository.create({name, description});
     }
