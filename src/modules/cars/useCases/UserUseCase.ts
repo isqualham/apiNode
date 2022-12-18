@@ -3,6 +3,8 @@ import {inject, injectable} from "tsyringe";
 import {hash} from "bcryptjs";
 import { Errors } from "../../../errors/Errors";
 
+import { deleteFile } from "../../../utils/file";
+
 interface IcreateUserData{
     name: string;
     avatar: string;
@@ -47,6 +49,9 @@ class UserUseCase {
     async updateAvatar({userId, avatarFile}:IUpdateAvatar): Promise<void> {   
 
         const user = await this.usersRepository.findById(userId);
+
+        if(user.avatar)
+            await deleteFile(`./tmp/avatar/${user.avatar}`);
 
         user.avatar = avatarFile;
         
