@@ -5,10 +5,12 @@ interface IcreateUserData{
     password: string;
     email: string;
     driver_license: string;
+    avatar?: string;
+    id?: string;
 }
 
 interface IUsersRepository{
-    store({name, password,email,driver_license}:IcreateUserData): Promise<void>;
+    store({id, name, avatar, password,email,driver_license}:IcreateUserData): Promise<void>;
     findByEmail(email: string): Promise<User>;
     findById(id: string): Promise<User>;
 }

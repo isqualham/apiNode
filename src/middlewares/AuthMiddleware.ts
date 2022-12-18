@@ -28,6 +28,11 @@ export async function AuthMiddleware
         if(!user){
             throw new Errors("user does not exist", 401);
         }
+
+        request.user = {
+            id: userId
+        }
+        
         next();
     } catch {
         throw new Errors("token invalid", 401);        

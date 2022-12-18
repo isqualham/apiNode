@@ -5,9 +5,15 @@ import { Errors } from "../../../errors/Errors";
 
 interface IcreateUserData{
     name: string;
+    avatar: string;
     password: string;
     email: string;
-    driver_license: string;
+    driver_license: string;    
+}
+
+interface IUpdateAvatar{
+    userId: string;
+    avatarFile: string;
 }
 
 @injectable()
@@ -18,7 +24,7 @@ class UserUseCase {
         private usersRepository: IUsersRepository
     ){}
 
-    async execute({name,password,email,driver_license}:IcreateUserData): Promise<void> {
+    async execute({name, avatar, password,email,driver_license}:IcreateUserData): Promise<void> {
 
         const userAlreadyExists = await this.usersRepository.findByEmail(email);
 
@@ -30,10 +36,21 @@ class UserUseCase {
 
         await this.usersRepository.store({
             name,
+            avatar,
             password: passwordHash,
             email,
             driver_license
+            
         });
+    }
+
+    async updateAvatar({userId, avatarFile}:IUpdateAvatar): Promise<void> {   
+
+        const user = await this.usersRepository.findById(userId);
+
+        user.avatar = avatarFile;
+        
+        await this.usersRepository.store(user);        
     }
 
 }
