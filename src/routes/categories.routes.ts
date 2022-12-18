@@ -16,10 +16,7 @@ const createCategoryController = new CreateCategoryController();
 categoriesRoutes.post("/", createCategoryController.handle);    
 
 
-categoriesRoutes.get("/", (resquest, response) =>{
-    const categoriesRepository = new CategoriesRepository();
-    return categoriesRepository.index();
-});
+categoriesRoutes.get("/", createCategoryController.handle);
 
 categoriesRoutes.post("/import", upload.single("file"), (request, response) =>{
    return response.json(importCategoryController.handle(request, response));
