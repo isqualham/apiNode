@@ -7,7 +7,7 @@ import { deleteFile } from "../../../utils/file";
 
 interface IcreateUserData{
     name: string;
-    avatar: string;
+    avatar?: string;
     password: string;
     email: string;
     driver_license: string;    
@@ -26,7 +26,7 @@ class UserUseCase {
         private usersRepository: IUsersRepository
     ){}
 
-    async execute({name, avatar, password,email,driver_license}:IcreateUserData): Promise<void> {
+    async execute({name, avatar, password, email, driver_license}:IcreateUserData): Promise<void> {
 
         const userAlreadyExists = await this.usersRepository.findByEmail(email);
 
