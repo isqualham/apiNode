@@ -3,6 +3,10 @@ import { IUsersRepository } from "../repositories/IUsersRepository";
 import {sign} from "jsonwebtoken";
 
 import {compare} from "bcryptjs";
+import { Errors } from "../../../errors/Errors";
+
+
+
 
 interface IRequestData{
     email:string;
@@ -29,13 +33,13 @@ class AuthUseCase {
         const user = await this.usersRepository.findByEmail(email);
 
         if(!user){
-            throw new Error("Email not found");
+            throw new Errors("Email not found");
         }
 
         const passwordMatch = await compare(password, user.password);
 
         if(!passwordMatch){
-            throw new Error("password not found");
+            throw new Errors("password not found");
         }
 
         const token = sign(
