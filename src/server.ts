@@ -5,6 +5,8 @@ import swaggerUi from 'swagger-ui-express';
 
 import swaggerFile from './swagger.json';
 
+import createConnection from './dataBase/index';
+
 import  './dataBase';
 
 import './shared/container';
@@ -12,6 +14,7 @@ import './shared/container';
 import { router } from './routes';
 import { Errors } from './errors/Errors';
 
+createConnection();
 const app = express();
 
 app.use(express.json());
