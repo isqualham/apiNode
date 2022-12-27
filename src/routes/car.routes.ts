@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import { AdminMiddleware } from '../middlewares/adminMiddleware';
+import { AdminMiddleware } from '../middlewares/AdminMiddleware';
 import { AuthMiddleware } from '../middlewares/AuthMiddleware';
 import { CarController } from '../modules/cars/useCases/createCategory/CarController';
 
