@@ -54,16 +54,16 @@ class AuthUseCase {
             expiresIn: auth.expires_in_token
         });
 
-        const refresh_token = sign({email}, auth.secret_refresh_token,{
+        const refresh_token = sign({email}, auth.secret_token,{
             subject: user.id, 
             expiresIn: auth.expires_in_refresh_token
         });
 
-        // await this.usersTokensRepository.store({
-        //     user_id: user.id,
-        //     expires_date: dayjs().add(auth.expires_refresh_token, "days").toDate(),
-        //     refresh_token,
-        // });
+        await this.usersTokensRepository.store({
+            user_id: user.id,
+            expires_date: dayjs().add(auth.expires_refresh_token, "days").toDate(),
+            refresh_token,
+        });
 
         return {
             user:{

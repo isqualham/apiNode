@@ -1,7 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
+import auth from "../config/auth";
 import { Errors } from "../errors/Errors";
 import { UsersRepository } from "../modules/cars/repositories/UsersRepository";
+import { UsersTokensRepository } from "../modules/cars/repositories/UsersTokensRepository";
 
 interface IPayload{
     sub: string;
@@ -19,7 +21,7 @@ export async function AuthMiddleware
     const [, token] = authHeader.split(" ");
 
     try {
-        const {sub: userId} = verify(token, "e9d068a0df68fdc66bce4cf86bd6aa4d") as IPayload;
+        const {sub: userId} = verify(token, auth.secret_token) as IPayload;
 
         const usersRepository = new UsersRepository();
 
