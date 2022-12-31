@@ -26,7 +26,7 @@ class ResetPasswordUseCase{
            throw new Errors("token invalid");
 
         if(dayjs(userToken.expires_date).isBefore(dayjs())){
-            await this.usersTokensRepository.deleteById(userToken.id);
+            await this.usersTokensRepository.deleteById(userToken.user_id);
             throw new Errors("token expired");
         }
 
