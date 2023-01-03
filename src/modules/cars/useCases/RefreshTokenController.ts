@@ -21,8 +21,6 @@ class RefreshTokenController {
             throw new Errors("error refresh token"+Error.message);                        
         }               
     };
-
-    
 }
 
 export {RefreshTokenController}
